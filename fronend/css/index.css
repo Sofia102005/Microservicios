@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 20px;
@@ -24,6 +30,11 @@ header {
     font-size: 36px;
 }
 
+.logo {
+    height: 10px;  
+    width: auto;   
+    display: block; 
+}
 .Create {
     background-color: #e53935;
     color: white;
@@ -46,42 +57,81 @@ header {
     transform: scale(0.98);
 }
 
-.InitialForm form {
-    max-width: 700px;
-    margin: auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', sans-serif;
-    color: #333;
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(24, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    padding: 0 10px;
 }
 
-.InitialForm form label {
+.modal-content {
+    background: #ffffff;
+    color: #333;
+    padding: 20px 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.6); 
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #b71c1c; 
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #e53935; 
+}
+
+.modal-content form label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
     margin-top: 15px;
+    color: #a30707; 
 }
 
-.InitialForm form input[type="text"],
-.InitialForm form input[type="date"],
-.InitialForm form textarea {
+.modal-content form input[type="text"],
+.modal-content form input[type="date"],
+.modal-content form textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #bbb;
+    padding: 8px;
+    border: 1px solid #d32f2f; 
     border-radius: 6px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-size: 1rem;
+    box-sizing: border-box;
+    color: #150101;
 }
 
-.InitialForm form textarea {
+.modal-content form textarea {
     resize: vertical;
     min-height: 100px;
 }
 
-.InitialForm form button {
-    background-color: #e53935;
+.modal-content form button {
+    background-color: #e53935; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -89,15 +139,26 @@ header {
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.InitialForm form button:hover {
+.modal-content form button:hover {
     background-color: #ad1515;
     transform: scale(1.05);
 }
 
-.InitialForm form button:active {
-    background-color: #6f0d0d;
+.modal-content form button:active {
+    background-color: #6f0d0d; 
     transform: scale(0.98);
+}
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

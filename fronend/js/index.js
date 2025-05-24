@@ -1,20 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const createButton = document.querySelector('.Create');
-  const formContainer = document.getElementById('formContainer');
-  const form = formContainer.querySelector('form');
+document.addEventListener('DOMContentLoaded', function () {
+    const openBtn = document.querySelector('.Create');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('closeModal');
+    const form = document.getElementById('retroForm');
 
-  createButton.addEventListener('click', () => {
-    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
-  });
+    openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault(); // Quita esta línea si quieres que el formulario se envíe normalmente
-    formContainer.style.display = 'none';
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 
-    // Opcional: Limpia los campos del formulario
-    form.reset();
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 
-    // Si deseas enviar el formulario normalmente, elimina `e.preventDefault();`
-    // y mueve `formContainer.style.display = 'none';` a un evento "onsubmit" en el servidor
-  });
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        //Falta codigo de guardar datos
+        form.reset();
+        modal.style.display = 'none';
+    });
 });
