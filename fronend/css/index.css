@@ -4,6 +4,7 @@ body {
     background-color: #150101;
     color: #ffffff;
 }
+
 header {
     display: flex;
     justify-content: space-between;
@@ -18,7 +19,85 @@ header {
     top: 0;
     z-index: 1000;
 }
-.empresa{
-     font-size: 36px;
+
+.empresa {
+    font-size: 36px;
 }
 
+.Create {
+    background-color: #e53935;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+.Create:hover {
+    background-color: #ad1515;
+    transform: scale(1.05);
+}
+
+.Create:active {
+    background-color: #6f0d0d;
+    transform: scale(0.98);
+}
+
+.InitialForm form {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+.InitialForm form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+.InitialForm form input[type="text"],
+.InitialForm form input[type="date"],
+.InitialForm form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.InitialForm form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.InitialForm form button {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.InitialForm form button:hover {
+    background-color: #ad1515;
+    transform: scale(1.05);
+}
+
+.InitialForm form button:active {
+    background-color: #6f0d0d;
+    transform: scale(0.98);
+
+}

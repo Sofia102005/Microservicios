@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>Resgistro Reuniones</title>
+    <title>Registro Reuniones</title>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -16,17 +18,56 @@
         </nav>
     </header>
     <br>
-    <button>
-        crear
+    <button class="Create">
+        Nueva tabla
     </button>
-    <div>
-        <form action="">
-          <h2>nuevo</h2>  
-          <h2>nuevo</h2>  
-          <h2>nuevo</h2>  
-          <h2>nuevo</h2>  
+    <div  class="InitialForm" id="formContainer" style="display: none;">
+        <form method="post" action="">
+            <input type="hidden" name="CreateDate" id="CreateDate">
+            <div>
+                <label for="Title">Titulo Reuniones</label>
+                <input type="text" id="Title" name="Title" required max="60">
+            </div>
+            <div>
+                <label for="StartDate">Fecha de Inicio</label>
+                <input type="date" id="StartDate" name="StartDate" required>
+            </div>
+            <div>
+                <label for="EndDate">Fecha de Fin</label>
+                <input type="date" id="EndDate" name="EndDate" required>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="Logros">Logros del Sprint (aspectos positivos)</label><br>
+                <textarea id="Logros" name="Logros" rows="4"
+                    placeholder="Ej. Mejoramos la comunicación, entregamos antes de tiempo..." required></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="Impedimentos">Impedimentos o aspectos negativos</label><br>
+                <textarea id="Impedimentos" name="Impedimentos" rows="4"
+                    placeholder="Ej. Falta de claridad en los requisitos..." required></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="Compromisos">Acciones / Compromisos para el próximo sprint</label><br>
+                <textarea id="Compromisos" name="Compromisos" rows="4"
+                    placeholder="Ej. Revisar las historias de usuario con el PO antes del lunes..." required></textarea> 
+                    <!--Corregir todos lo de compromiso, impedimento y logros-->
+            </div> 
+            <button type="submit">Guardar Retrospectiva</button>
+            </fieldset>
+           
         </form>
     </div>
+    <section class="Tables">
+        <table class="TableList">
+
+
+        </table>
+
+    </section>
+     <script src="js/index.js"></script>
 
 </body>
+
 </html>
