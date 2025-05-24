@@ -1,0 +1,24 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background-color: #150101;
+    color: #ffffff;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: linear-gradient(90deg, #840303 0%, #a30707 100%);
+    box-shadow: 0 4px 12px rgba(132, 3, 3, 0.2);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.empresa{
+     font-size: 36px;
+}
+
