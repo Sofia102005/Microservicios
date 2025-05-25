@@ -31,12 +31,11 @@ header {
 }
 
 .logo {
-    height: 10px;  
-    width: auto;   
-    display: block; 
+    height: 40px;  
+    width: 70px;
 }
 .Create {
-    background-color: #e53935;
+    background-color: #1414ff;
     color: white;
     padding: 12px 24px;
     font-size: 16px;
@@ -48,7 +47,7 @@ header {
 }
 
 .Create:hover {
-    background-color: #ad1515;
+    background-color: #0051ff;
     transform: scale(1.05);
 }
 
