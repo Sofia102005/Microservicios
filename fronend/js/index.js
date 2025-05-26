@@ -39,26 +39,34 @@ document.addEventListener('DOMContentLoaded', function () {
         const fechaInicio = document.getElementById("StartDate").value;
         const fechaFin = document.getElementById("EndDate").value;
 
+        // Crear resumen solo con botones
         const resumenHTML = `
-            <h2>Resumen de Retrospectiva</h2>
+            <h2>Retrospectiva guardada</h2>
             <p><strong>Título:</strong> ${titulo}</p>
             <p><strong>Fecha Inicio:</strong> ${fechaInicio}</p>
             <p><strong>Fecha Fin:</strong> ${fechaFin}</p>
 
-            <h3>Logros</h3>
-            <ul>${logros.map(l => `<li>${l}</li>`).join('')}</ul>
-
-            <h3>Impedimentos</h3>
-            <ul>${impedimentos.map(i => `<li>${i}</li>`).join('')}</ul>
-
-            <h3>Compromisos</h3>
-            <ul>${compromisos.map(c => `<li>${c}</li>`).join('')}</ul>
+            <div style="margin-top: 20px;">
+                <button id="btnNuevaRetrospectiva" style="margin-right: 10px;">Nueva Retrospectiva</button>
+                <button id="btnVerRetrospectiva">Ver Retrospectiva</button>
+            </div>
         `;
 
         contenidoResumen.innerHTML = resumenHTML;
         modalResumen.style.display = 'flex';
 
-        // Limpiar datos
+        // Botón para abrir nuevo modal de creación
+        document.getElementById('btnNuevaRetrospectiva').addEventListener('click', () => {
+            modalResumen.style.display = 'none';
+            modal.style.display = 'flex'; // Abrir modal para nueva retrospectiva
+        });
+
+        // Botón para ver retrospectiva (aquí puedes implementar lo que desees)
+        document.getElementById('btnVerRetrospectiva').addEventListener('click', () => {
+            alert('Aquí puedes implementar la función para ver retrospectivas guardadas.');
+        });
+
+        // Limpiar formulario y listas
         form.reset();
         listaLogros.innerHTML = '';
         listaImpedimentos.innerHTML = '';
