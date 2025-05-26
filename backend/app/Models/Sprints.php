@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class sprints extends Model
 {
-   protected $table = "retro_items";
+   protected $table = "sprints";
     public $timestamps = false;
 }
