@@ -1,3 +1,70 @@
+const table = document.getElementById('registrosTable')
+
+class Registros {
+    static async getAllRegistros() {
+        try {
+            const resp = await fetch('http://127.0.0.1:8000/api/registros');
+            const bodyResp = await resp.json();
+            return bodyResp.data;
+        }catch(error){ 
+            console.error(error);
+            return null;
+        }
+    }
+}
+
+const cargarTabla = async () => {
+    const registros = await Registros.getAllRegistros();
+    const tbody = table.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
+    for(let item of registros){
+        const tdSprint_Id = document.createElement('td');
+        tdSprint_Id.textContent = item.sprint_id;
+
+        const tdCategoria = document.createElement('td');
+        tdCategoria.textContent = item.categoria;
+
+        const tdDescripcion = document.createElement('td');
+        tdDescripcion.textContent = item.descripcion;
+
+        const tdCumplida = document.createElement('td');
+        tdCumplida.textContent = item.cumplida;
+
+        const tdFecha_revision = document.createElement('td');
+        tdFecha_revision.textContent = item.fecha_revision;
+
+        const tdCreated_at = document.createElement('td');
+        tdCreated_at.textContent = item.created_at;
+        
+        const tdUpdated_at = document.createElement('td');
+        tdUpdated_at.textContent = item.updated_at;
+
+        const editarBtn = document.createElement('button');
+        editarBtn.textContent = 'Editar';
+
+        const eliminarBtn = document.createElement('button');
+        eliminarBtn.textContent = 'Eliminar';
+
+        const tdBotones = document.createElement('td');
+        tdBotones.appendChild(editarBtn);
+        tdBotones.appendChild(eliminarBtn);
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdSprint_Id);
+        tr.appendChild(tdCategoria);
+        tr.appendChild(tdDescripcion);
+        tr.appendChild(tdCumplida);
+        tr.appendChild(tdFecha_revision);
+        tr.appendChild(tdCreated_at);
+        tr.appendChild(tdUpdated_at);
+        tr.appendChild(tdBotones);
+
+        tbody.appendChild(tr);
+    }
+}
+
+cargarTabla();
+
 let logros = [];
 let impedimentos = [];
 let compromisos = [];
