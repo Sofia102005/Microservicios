@@ -28,12 +28,15 @@ header {
 
 .empresa {
     font-size: 36px;
+    margin: 0; 
 }
 
-.logo {
-    height: 10px;  
-    width: auto;   
-    display: block; 
+.logo img {
+    height: 60px;       
+    width: auto;        
+    object-fit: contain;
+    display: block;
+    max-width: 100%;
 }
 .Create {
     background-color: #e53935;
@@ -151,7 +154,41 @@ header {
     background-color: #6f0d0d; 
     transform: scale(0.98);
 }
+.logro-impedimento-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.logro-impedimento-container input[type="text"] {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #d32f2f;
+  border-radius: 6px;
+  color: #150101;
+}
+
+.FormButton {
+  min-width: 100px;
+  padding: 8px 12px;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.FormButton:hover {
+  background-color: #ad1515;
+  transform: scale(1.05);
+}
+
+.FormButton:active {
+  background-color: #6f0d0d;
+  transform: scale(0.98);
+}
 @keyframes fadeIn {
     from {
         opacity: 0;
