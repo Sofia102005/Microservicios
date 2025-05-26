@@ -31,18 +31,17 @@ header {
     margin: 0; 
 }
 
-<<<<<<< HEAD
 .logo img {
     height: 60px;       
     width: auto;        
     object-fit: contain;
     display: block;
     max-width: 100%;
-=======
+}
 .logo {
     height: 40px;  
     width: 70px;
->>>>>>> 214d0956ea6d267df766988bd5fdde6d02a24f34
+
 }
 .Create {
     background-color: #1414ff;
