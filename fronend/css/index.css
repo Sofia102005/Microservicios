@@ -41,8 +41,8 @@ header {
 .logo {
     height: 40px;  
     width: 70px;
-
 }
+
 .Create {
     background-color: #1414ff;
     color: white;
@@ -159,41 +159,44 @@ header {
     background-color: #6f0d0d; 
     transform: scale(0.98);
 }
+
 .logro-impedimento-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .logro-impedimento-container input[type="text"] {
-  flex-grow: 1;
-  padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #d32f2f;
-  border-radius: 6px;
-  color: #150101;
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #d32f2f;
+    border-radius: 6px;
+    color: #150101;
 }
 
 .FormButton {
-  min-width: 100px;
-  padding: 8px 12px;
-  background-color: #e53935;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 100px;
+    padding: 8px 12px;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .FormButton:hover {
-  background-color: #ad1515;
-  transform: scale(1.05);
+    background-color: #ad1515;
+    transform: scale(1.05);
 }
 
 .FormButton:active {
-  background-color: #6f0d0d;
-  transform: scale(0.98);
+    background-color: #6f0d0d;
+    transform: scale(0.98);
 }
+
+/* ANIMACIÓN */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -203,4 +206,29 @@ header {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ESTILOS PARA EL MODAL DE RESUMEN */
+#contenidoResumen {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+#contenidoResumen h2 {
+    color: #a30707;
+    margin-bottom: 15px;
+}
+
+#contenidoResumen p,
+#contenidoResumen li {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+#contenidoResumen ul {
+    margin-left: 20px;
+    list-style-type: disc;
 }
