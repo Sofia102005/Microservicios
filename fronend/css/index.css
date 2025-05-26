@@ -31,15 +31,21 @@ header {
     margin: 0; 
 }
 
+<<<<<<< HEAD
 .logo img {
     height: 60px;       
     width: auto;        
     object-fit: contain;
     display: block;
     max-width: 100%;
+=======
+.logo {
+    height: 40px;  
+    width: 70px;
+>>>>>>> 214d0956ea6d267df766988bd5fdde6d02a24f34
 }
 .Create {
-    background-color: #e53935;
+    background-color: #1414ff;
     color: white;
     padding: 12px 24px;
     font-size: 16px;
@@ -51,7 +57,7 @@ header {
 }
 
 .Create:hover {
-    background-color: #ad1515;
+    background-color: #0051ff;
     transform: scale(1.05);
 }
 
