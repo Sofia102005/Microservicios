@@ -1,14 +1,11 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
     margin: 20px;
     background-color: #150101;
-    color: #ffffff;
 }
 
 header {
@@ -19,28 +16,17 @@ header {
     background: linear-gradient(90deg, #840303 0%, #a30707 100%);
     box-shadow: 0 4px 12px rgba(132, 3, 3, 0.2);
     color: #fff;
-    font-size: 1.1rem;
-    font-weight: 500;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
 
 .empresa {
+    font-family: 'Arial', sans-serif;
     font-size: 36px;
     margin: 0; 
 }
 
-.logo img {
-    height: 60px;       
-    width: auto;        
-    object-fit: contain;
-    display: block;
-    max-width: 100%;
-}
 .logo {
-    height: 40px;  
-    width: 70px;
+    height: 60px;
+    width: 60px;
 }
 
 .Create {
