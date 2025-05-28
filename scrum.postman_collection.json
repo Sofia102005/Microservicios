@@ -1,16 +1,17 @@
 {
 	"info": {
-		"_postman_id": "abb2e570-bb64-489e-b17a-f99060ea020a",
+		"_postman_id": "8933ce1e-41a1-415a-8721-f5351f53fd7e",
 		"name": "scrum",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "44583750"
+		"_exporter_id": "45301587",
+		"_collection_link": "https://karenbarreto.postman.co/workspace/Karen-Barreto's-Workspace~b69bb1d9-808d-4357-88ac-98e73bd2c09c/collection/45301587-8933ce1e-41a1-415a-8721-f5351f53fd7e?action=share&source=collection_link&creator=45301587"
 	},
 	"item": [
 		{
 			"name": "registros",
 			"item": [
 				{
-					"name": "listar registro",
+					"name": "lista registro",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -139,6 +140,147 @@
 							"path": [
 								"api",
 								"registro",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sprints",
+			"item": [
+				{
+					"name": "lista sprints",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sprints",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sprints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear sprints",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"nombre\": \"Sprint 1\",\r\n    \"fecha_inicio\": \"2025-05-01\",\r\n    \"fecha_fin\": \"2025-05-15\",\r\n    \"created_at\": \"2025-05-25 16:36:24\",\r\n    \"updated_at\": \"2025-05-25 16:36:24\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sprint",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sprint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "detalle de sprint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sprint/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sprint",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar sprints",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Sprint 1\",\r\n    \"fecha_inicio\": \"2025-05-01\",\r\n    \"fecha_fin\": \"2025-05-15\",\r\n    \"created_at\": \"2025-05-25 16:36:24\",\r\n    \"updated_at\": \"2025-05-25 16:36:24\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sprint/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sprint",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar sprint",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sprint/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sprint",
 								"1"
 							]
 						}
