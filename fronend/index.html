@@ -4,99 +4,114 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Registro Reuniones</title>
+    <title>Registro de Reuniones</title>
 </head>
 <body>
+
+    <!-- Encabezado -->
     <header>
         <div>
-            <img class="logo" src="recursos/logo.jpg" alt="Logo" />
+            <img class="logo" src="recursos/logo.jpg" alt="Logo de RedPulse" />
         </div>
         <nav>
             <h1 class="empresa">RedPulse</h1>
         </nav>
     </header>
 
-    <br>
+    <main>
+        <!-- Botón para abrir modal -->
+        <section>
+            <button class="Create" id="abrirModal">Nueva tabla</button>
+        </section>
 
-    <button class="Create">Nueva tabla</button>
+        <!-- Modal de creación -->
+        <section>
+            <div id="modal" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <div class="modal-content">
+                    <button id="closeModal" class="close-btn" aria-label="Cerrar">&times;</button>
+                    <form id="retroForm" method="post" action="">
+                        <input type="hidden" name="CreateDate" id="CreateDate" />
 
-    <!-- Modal de creación -->
-    <div id="modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <button id="closeModal" class="close-btn">&times;</button>
-            <form id="retroForm" method="post" action="">
-                <input type="hidden" name="CreateDate" id="CreateDate" />
+                        <h2 id="modalTitle">Nueva Retrospectiva</h2>
 
-                <div>
-                    <label for="Title">Título Reunión</label>
-                    <input type="text" id="Title" name="Title" required maxlength="60" />
+                        <div>
+                            <label for="Title">Título Reunión</label>
+                            <input type="text" id="Title" name="Title" required maxlength="60" />
+                        </div>
+
+                        <div>
+                            <label for="StartDate">Fecha de Inicio</label>
+                            <input type="date" id="StartDate" name="StartDate" required />
+                        </div>
+
+                        <div>
+                            <label for="EndDate">Fecha de Fin</label>
+                            <input type="date" id="EndDate" name="EndDate" required />
+                        </div>
+
+                        <!-- Logros -->
+                        <div>
+                            <h3>Logros del Sprint</h3>
+                            <div class="logro-impedimento-container">
+                                <input type="text" id="nuevoLogro" placeholder="Escribe un logro..." />
+                                <button type="button" onclick="agregarLogro()" class="FormButton">Agregar</button>
+                            </div>
+                            <ul id="listaLogros"></ul>
+                            <input type="hidden" name="logrosFinales" id="logrosFinales" />
+                        </div>
+
+                        <!-- Impedimentos -->
+                        <div>
+                            <h3>Impedimentos</h3>
+                            <div class="logro-impedimento-container">
+                                <input type="text" id="nuevoImpedimento" placeholder="Escribe un impedimento..." />
+                                <button type="button" onclick="agregarImpedimento()" class="FormButton">Agregar</button>
+                            </div>
+                            <ul id="listaImpedimentos"></ul>
+                            <input type="hidden" name="impedimentosFinales" id="impedimentosFinales" />
+                        </div>
+
+                        <!-- Compromisos -->
+                        <div>
+                            <h3>Compromisos del equipo</h3>
+                            <div class="logro-impedimento-container">
+                                <input type="text" id="nuevoCompromiso" placeholder="Escribe un compromiso..." />
+                                <button type="button" onclick="agregarCompromiso()" class="FormButton">Agregar</button>
+                            </div>
+                            <ul id="listaCompromisos"></ul>
+                            <input type="hidden" name="compromisosFinales" id="compromisosFinales" />
+                        </div>
+
+                        <br />
+                        <button type="button" id="btnGuardar">Guardar Retrospectiva</button>
+                    </form>
                 </div>
-
-                <div>
-                    <label for="StartDate">Fecha de Inicio</label>
-                    <input type="date" id="StartDate" name="StartDate" required />
-                </div>
-
-                <div>
-                    <label for="EndDate">Fecha de Fin</label>
-                    <input type="date" id="EndDate" name="EndDate" required />
-                </div>
-
-                <div>
-                    <h3>Logros del Sprint</h3>
-                    <div class="logro-impedimento-container">
-                        <input type="text" id="nuevoLogro" placeholder="Escribe un logro..." />
-                        <button type="button" onclick="agregarLogro()" class="FormButton">Agregar</button>
-                    </div>
-                    <ul id="listaLogros"></ul>
-                    <input type="hidden" name="logrosFinales" id="logrosFinales" />
-                </div>
-
-                <div>
-                    <h3>Impedimentos</h3>
-                    <div class="logro-impedimento-container">
-                        <input type="text" id="nuevoImpedimento" placeholder="Escribe un impedimento..." />
-                        <button type="button" onclick="agregarImpedimento()" class="FormButton">Agregar</button>
-                    </div>
-                    <ul id="listaImpedimentos"></ul>
-                    <input type="hidden" name="impedimentosFinales" id="impedimentosFinales" />
-                </div>
-
-                <div>
-                    <h3>Compromisos del equipo</h3>
-                    <div class="logro-impedimento-container">
-                        <input type="text" id="nuevoCompromiso" placeholder="Escribe un compromiso..." />
-                        <button type="button" onclick="agregarCompromiso()" class="FormButton">Agregar</button>
-                    </div>
-                    <ul id="listaCompromisos"></ul>
-                    <input type="hidden" name="compromisosFinales" id="compromisosFinales" />
-                </div>
-
-                <br />
-                <button type="button" id="btnGuardar">Guardar Retrospectiva</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal de resumen -->
-    <div id="modalResumen" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <button id="cerrarResumen" class="close-btn">&times;</button>
-            <div id="contenidoResumen">
-                <!-- Aquí se insertarán los botones y resumen dinámicamente -->
             </div>
-        </div>
-    </div>
+        </section>
 
-    <section class="Tables">
-        <table id="registrosTable" class="TableList">
-            <tbody>
-                
-            </tbody>
-        </table>
-    </section>
+        <!-- Modal de resumen -->
+        <section>
+            <div id="modalResumen" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="resumenTitle">
+                <div class="modal-content">
+                    <button id="cerrarResumen" class="close-btn" aria-label="Cerrar resumen">&times;</button>
+                    <div id="contenidoResumen">
+                        <h2 id="resumenTitle">Resumen de Retrospectiva</h2>
+                        <!-- Aquí se insertarán los botones y resumen dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabla de registros -->
+        <section class="Tables">
+            <table id="registrosTable" class="TableList" aria-label="Lista de Retrospectivas">
+                <tbody>
+                    <!-- Contenido dinámico -->
+                </tbody>
+            </table>
+        </section>
+    </main>
 
     <script src="js/index.js"></script>
 </body>
-
 </html>
