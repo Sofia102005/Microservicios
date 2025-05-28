@@ -17,7 +17,7 @@ const cargarTabla = async () => {
     const registros = await Registros.getAllRegistros();
     const tbody = table.getElementsByTagName('tbody')[0];
     tbody.innerHTML = '';
-    for(let item of registros){
+    for (let item of registros) {
         const tdSprint_Id = document.createElement('td');
         tdSprint_Id.textContent = item.sprint_id;
 
@@ -64,6 +64,8 @@ const cargarTabla = async () => {
 }
 
 cargarTabla();
+
+//////////////////////////////////////////////////
 
 let logros = [];
 let impedimentos = [];
