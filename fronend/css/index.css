@@ -29,8 +29,57 @@ header {
     width: 60px;
 }
 
+.tarjetas-contenedor {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+}
+
+.tarjeta-retro {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 300px;
+    background: #f9f9f9;
+}
+.seccion-retro {
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.fechas-retro {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.retro-btn{
+     background-color: #e53935;
+     color: white;
+     padding: 12px 24px;
+     font-size: 16px;
+     border: none;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: background-color 0.3s ease, transform 0.2s ease;
+     font-weight: bold;
+}
+.retro-btn:hover{
+    background-color: #ad1515;
+    transform: scale(1.05);
+}
+.retro-btn:active{
+     background-color: #6f0d0d;
+    transform: scale(0.98);
+}
+
 .Create {
-    background-color: #1414ff;
+    background-color: #e53935;
     color: white;
     padding: 12px 24px;
     font-size: 16px;
@@ -42,7 +91,7 @@ header {
 }
 
 .Create:hover {
-    background-color: #0051ff;
+    background-color: #ad1515;
     transform: scale(1.05);
 }
 

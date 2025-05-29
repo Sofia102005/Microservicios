@@ -1,4 +1,4 @@
-const table = document.getElementById('registrosTable')
+const table = document.getElementById('registrosTable');
 
 class Registros {
     static async getAllRegistros() {
@@ -6,7 +6,7 @@ class Registros {
             const resp = await fetch('http://127.0.0.1:8000/api/registros');
             const bodyResp = await resp.json();
             return bodyResp.data;
-        }catch(error){ 
+        } catch (error) {
             console.error(error);
             return null;
         }
@@ -35,7 +35,7 @@ const cargarTabla = async () => {
 
         const tdCreated_at = document.createElement('td');
         tdCreated_at.textContent = item.created_at;
-        
+
         const tdUpdated_at = document.createElement('td');
         tdUpdated_at.textContent = item.updated_at;
 
@@ -61,11 +61,9 @@ const cargarTabla = async () => {
 
         tbody.appendChild(tr);
     }
-}
+};
 
 cargarTabla();
-
-//////////////////////////////////////////////////
 
 let logros = [];
 let impedimentos = [];
@@ -86,14 +84,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const contenidoResumen = document.getElementById("contenidoResumen");
     const cerrarResumen = document.getElementById("cerrarResumen");
 
+
     openBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
+        abrirModalCreacion();
     });
 
+    document.querySelectorAll('.retro-btn').forEach((btn) => {
+        if (btn.textContent.trim() === "Nueva Retrospectiva") {
+            btn.addEventListener('click', () => {
+                abrirModalCreacion();
+            });
+        }
+    });
+
+    // Cerrar modal creación
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
     });
 
+    // Cerrar si se hace clic fuera del modal
     window.addEventListener('click', (e) => {
         if (e.target === modal) modal.style.display = 'none';
         if (e.target === modalResumen) modalResumen.style.display = 'none';
@@ -103,12 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
         modalResumen.style.display = 'none';
     });
 
+    // Guardar retrospectiva
     btnGuardar.addEventListener('click', function () {
         const titulo = document.getElementById("Title").value.trim();
         const fechaInicio = document.getElementById("StartDate").value;
         const fechaFin = document.getElementById("EndDate").value;
 
-        // Crear resumen solo con botones
         const resumenHTML = `
             <h2>Retrospectiva guardada</h2>
             <p><strong>Título:</strong> ${titulo}</p>
@@ -124,29 +133,47 @@ document.addEventListener('DOMContentLoaded', function () {
         contenidoResumen.innerHTML = resumenHTML;
         modalResumen.style.display = 'flex';
 
-        // Botón para abrir nuevo modal de creación
         document.getElementById('btnNuevaRetrospectiva').addEventListener('click', () => {
             modalResumen.style.display = 'none';
-            modal.style.display = 'flex'; // Abrir modal para nueva retrospectiva
+            abrirModalCreacion();
         });
 
-        // Botón para ver retrospectiva (aquí puedes implementar lo que desees)
         document.getElementById('btnVerRetrospectiva').addEventListener('click', () => {
             alert('Aquí puedes implementar la función para ver retrospectivas guardadas.');
         });
 
-        // Limpiar formulario y listas
         form.reset();
-        listaLogros.innerHTML = '';
-        listaImpedimentos.innerHTML = '';
-        listaCompromisos.innerHTML = '';
-        logros = [];
-        impedimentos = [];
-        compromisos = [];
+       
     });
-});
 
-// Funciones para agregar elementos
+    function abrirModalCreacion() {
+    // Mostrar modal
+    document.getElementById('modal').style.display = 'flex';
+
+    // Repintar listas existentes
+    listaLogros.innerHTML = '';
+    for (const logro of logros) {
+        const li = document.createElement("li");
+        li.textContent = logro;
+        listaLogros.appendChild(li);
+    }
+
+    listaImpedimentos.innerHTML = '';
+    for (const imp of impedimentos) {
+        const li = document.createElement("li");
+        li.textContent = imp;
+        listaImpedimentos.appendChild(li);
+    }
+
+    listaCompromisos.innerHTML = '';
+    for (const comp of compromisos) {
+        const li = document.createElement("li");
+        li.textContent = comp;
+        listaCompromisos.appendChild(li);
+    }
+}
+});
+//Elementos//
 function agregarLogro() {
     const input = document.getElementById("nuevoLogro");
     const texto = input.value.trim();
