@@ -65,6 +65,37 @@ const cargarTabla = async () => {
 
 cargarTabla();
 
+/////////////////////////////////////////////////////////
+class Sprints {
+    static async getAllRegistros() {
+        try {
+            const resp = await fetch('http://127.0.0.1:8000/api/sprints');
+            const bodyResp = await resp.json();
+            return bodyResp.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+}
+const cargarTablasprints = async () => {
+    const sprints = await Sprints.getAllRegistros();
+
+    if (!sprints || sprints.length === 0) return;
+
+    // Mostrar en los elementos <p> principales
+    const fechaInicioEl = document.getElementById('fechaInicioSprint');
+    const fechaFinEl = document.getElementById('fechaFinSprint');
+
+    // Asegúrate de que existen en el DOM
+    if (fechaInicioEl && fechaFinEl) {
+        fechaInicioEl.innerHTML = `<strong>Inicio:</strong> ${sprints[0].fecha_inicio}`;
+        fechaFinEl.innerHTML = `<strong>Fin:</strong> ${sprints[0].fecha_fin}`;
+    }
+};
+
+cargarTablasprints();
+
 let logros = [];
 let impedimentos = [];
 let compromisos = [];
@@ -80,10 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const listaCompromisos = document.getElementById("listaCompromisos");
     const btnGuardar = document.getElementById("btnGuardar");
 
-    const modalResumen = document.getElementById("modalResumen");
-    const contenidoResumen = document.getElementById("contenidoResumen");
-    const cerrarResumen = document.getElementById("cerrarResumen");
-
+    
 
     openBtn.addEventListener('click', () => {
         abrirModalCreacion();
@@ -102,41 +130,27 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.style.display = 'none';
     });
 
-    // Cerrar si se hace clic fuera del modal
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
-        if (e.target === modalResumen) modalResumen.style.display = 'none';
-    });
 
-    cerrarResumen.addEventListener('click', () => {
-        modalResumen.style.display = 'none';
-    });
-
+    
     // Guardar retrospectiva
     btnGuardar.addEventListener('click', function () {
         const titulo = document.getElementById("Title").value.trim();
         const fechaInicio = document.getElementById("StartDate").value;
         const fechaFin = document.getElementById("EndDate").value;
 
-        const resumenHTML = `
-            <h2>Retrospectiva guardada</h2>
-            <p><strong>Título:</strong> ${titulo}</p>
-            <p><strong>Fecha Inicio:</strong> ${fechaInicio}</p>
-            <p><strong>Fecha Fin:</strong> ${fechaFin}</p>
+    const resumenHTML = `
+        <h2>Retrospectiva guardada</h2>
+        <p><strong>Título:</strong> ${titulo}</p>
+        <p><strong>Fecha Inicio:</strong> ${fechaInicio}</p>
+        <p><strong>Fecha Fin:</strong> ${fechaFin}</p>
+        <div style="margin-top: 20px;">
+            <button id="btnNuevaRetrospectiva" style="margin-right: 10px;">Nueva Retrospectiva</button>
+            <button id="btnVerRetrospectiva">Ver Retrospectiva</button>
+        </div>
+    `;
 
-            <div style="margin-top: 20px;">
-                <button id="btnNuevaRetrospectiva" style="margin-right: 10px;">Nueva Retrospectiva</button>
-                <button id="btnVerRetrospectiva">Ver Retrospectiva</button>
-            </div>
-        `;
+    document.body.insertAdjacentHTML('beforeend', resumenHTML);
 
-        contenidoResumen.innerHTML = resumenHTML;
-        modalResumen.style.display = 'flex';
-
-        document.getElementById('btnNuevaRetrospectiva').addEventListener('click', () => {
-            modalResumen.style.display = 'none';
-            abrirModalCreacion();
-        });
 
         document.getElementById('btnVerRetrospectiva').addEventListener('click', () => {
             alert('Aquí puedes implementar la función para ver retrospectivas guardadas.');
@@ -147,6 +161,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function abrirModalCreacion() {
+    logros = [];
+    impedimentos = [];
+    compromisos = [];
+
+    const modal = document.getElementById('modal');
+    modal.classList.remove('oculto'); // 👈 Mostrar el modal
+
+    const fechaInicioEl = document.getElementById('fechaInicio');
+    const fechaFinEl = document.getElementById('fechaFin');
     // Mostrar modal
     document.getElementById('modal').style.display = 'flex';
 

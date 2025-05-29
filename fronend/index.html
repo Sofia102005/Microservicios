@@ -18,6 +18,8 @@
     </nav>
   </header>
 
+  <br>
+
   <main>
     <!-- Botón para abrir modal -->
     <section>
@@ -26,13 +28,13 @@
 
     <!-- Modal de creación -->
     <section>
-      <div id="modal" class="modal-overlay oculto" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div id="modal" class="modal-overlay oculto" role="dialog" aria-modal="true">
         <div class="modal-content">
           <button id="closeModal" class="close-btn" aria-label="Cerrar">&times;</button>
           <form id="retroForm" method="post" action="">
             <input type="hidden" name="CreateDate" id="CreateDate" />
 
-            <h2 id="modalTitle">Nueva Retrospectiva</h2>
+            <h2 id="modalTitle" >Nueva Retrospectiva</h2>
 
             <div>
               <label for="Title">Título Reunión</label>
@@ -86,18 +88,7 @@
       </div>
     </section>
 
-    <!-- Modal de resumen -->
-    <section>
-      <div id="modalResumen" class="modal-overlay oculto" role="dialog" aria-labelledby="resumenTitle">
-        <div class="modal-content">
-          <button id="cerrarResumen" class="close-btn" aria-label="Cerrar resumen">&times;</button>
-          <div id="contenidoResumen">
-            <h2 id="resumenTitle">Resumen de Retrospectiva</h2>
-            <p>Aquí puedes mostrar detalles más amplios.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- Tarjetas de retrospectiva -->
     <section class="Tables">
@@ -106,8 +97,8 @@
           <h3>Título: Retrospectiva Sprint 1</h3>
 
           <div class="seccion-retro fechas-retro">
-            <p><strong>Inicio:</strong> 01/05/2025</p>
-            <p><strong>Fin:</strong> 15/05/2025</p>
+            <p id="fechaInicioSprint"><strong>Inicio:</strong></p>
+            <p id="fechaFinSprint"><strong>Fin:</strong></p>
           </div>
 
           <div class="seccion-retro">
@@ -133,7 +124,7 @@
           </div>
 
           <div class="seccion-retro">
-            <button class="retro-btn" onclick="abrirModalResumen()">Retrospectiva</button>
+            <button class="retro-btn" >Retrospectiva</button>
             <button class="retro-btn">Nueva Retrospectiva</button>
           </div>
         </div>
