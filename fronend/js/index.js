@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnGuardar = document.getElementById("btnGuardar");
 
     
-
+//boton de crear un nuevo sprind
     openBtn.addEventListener('click', () => {
         abrirModalCreacion();
     });
@@ -168,67 +168,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
     modal.classList.remove('oculto'); // 👈 Mostrar el modal
 
-    const fechaInicioEl = document.getElementById('fechaInicio');
-    const fechaFinEl = document.getElementById('fechaFin');
     // Mostrar modal
     document.getElementById('modal').style.display = 'flex';
 
     // Repintar listas existentes
-    listaLogros.innerHTML = '';
-    for (const logro of logros) {
-        const li = document.createElement("li");
-        li.textContent = logro;
-        listaLogros.appendChild(li);
-    }
-
-    listaImpedimentos.innerHTML = '';
-    for (const imp of impedimentos) {
-        const li = document.createElement("li");
-        li.textContent = imp;
-        listaImpedimentos.appendChild(li);
-    }
-
-    listaCompromisos.innerHTML = '';
-    for (const comp of compromisos) {
-        const li = document.createElement("li");
-        li.textContent = comp;
-        listaCompromisos.appendChild(li);
-    }
 }
 });
-//Elementos//
-function agregarLogro() {
-    const input = document.getElementById("nuevoLogro");
-    const texto = input.value.trim();
-    if (texto !== '') {
-        logros.push(texto);
-        const li = document.createElement("li");
-        li.textContent = texto;
-        document.getElementById("listaLogros").appendChild(li);
-        input.value = '';
-    }
-}
 
-function agregarImpedimento() {
-    const input = document.getElementById("nuevoImpedimento");
-    const texto = input.value.trim();
-    if (texto !== '') {
-        impedimentos.push(texto);
-        const li = document.createElement("li");
-        li.textContent = texto;
-        document.getElementById("listaImpedimentos").appendChild(li);
-        input.value = '';
-    }
-}
-
-function agregarCompromiso() {
-    const input = document.getElementById("nuevoCompromiso");
-    const texto = input.value.trim();
-    if (texto !== '') {
-        compromisos.push(texto);
-        const li = document.createElement("li");
-        li.textContent = texto;
-        document.getElementById("listaCompromisos").appendChild(li);
-        input.value = '';
-    }
-}

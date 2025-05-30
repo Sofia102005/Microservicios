@@ -21,20 +21,18 @@
   <br>
 
   <main>
-    <!-- Botón para abrir modal -->
+    <!-- Botón para crear nuevo sprint -->
     <section>
-      <button class="Create" id="abrirModal">Nueva tabla</button>
+      <button class="Create" id="">Nuevo Sprint</button>
     </section>
-
-    <!-- Modal de creación -->
-    <section>
-      <div id="modal" class="modal-overlay oculto" role="dialog" aria-modal="true">
+    <!-- para crear nuevo sprint -->
+           <div id="modal" class="modal-overlay oculto">
         <div class="modal-content">
           <button id="closeModal" class="close-btn" aria-label="Cerrar">&times;</button>
           <form id="retroForm" method="post" action="">
             <input type="hidden" name="CreateDate" id="CreateDate" />
 
-            <h2 id="modalTitle" >Nueva Retrospectiva</h2>
+            <h2 id="modalTitle" >Nuevo Sprint</h2>
 
             <div>
               <label for="Title">Título Reunión</label>
@@ -55,7 +53,7 @@
               <h3>Logros del Sprint</h3>
               <div class="logro-impedimento-container">
                 <input type="text" id="nuevoLogro" placeholder="Escribe un logro..." />
-                <button type="button" onclick="agregarLogro()" class="FormButton">Agregar</button>
+                <button type="button" class="FormButton">Agregar</button>
               </div>
               <ul id="listaLogros"></ul>
               <input type="hidden" name="logrosFinales" id="logrosFinales" />
@@ -65,7 +63,7 @@
               <h3>Impedimentos</h3>
               <div class="logro-impedimento-container">
                 <input type="text" id="nuevoImpedimento" placeholder="Escribe un impedimento..." />
-                <button type="button" onclick="agregarImpedimento()" class="FormButton">Agregar</button>
+                <button type="button" class="FormButton">Agregar</button>
               </div>
               <ul id="listaImpedimentos"></ul>
               <input type="hidden" name="impedimentosFinales" id="impedimentosFinales" />
@@ -75,7 +73,7 @@
               <h3>Compromisos del equipo</h3>
               <div class="logro-impedimento-container">
                 <input type="text" id="nuevoCompromiso" placeholder="Escribe un compromiso..." />
-                <button type="button" onclick="agregarCompromiso()" class="FormButton">Agregar</button>
+                <button type="button" class="FormButton">Agregar</button>
               </div>
               <ul id="listaCompromisos"></ul>
               <input type="hidden" name="compromisosFinales" id="compromisosFinales" />
@@ -88,7 +86,64 @@
       </div>
     </section>
 
+    <!-- Modal de creación -->
+    <section>
+      <div id="modal" class="modal-overlay oculto">
+        <div class="modal-content">
+          <button id="closeModal" class="close-btn" aria-label="Cerrar">&times;</button>
+          <form id="retroForm" method="post" action="">
+            <input type="hidden" name="CreateDate" id="CreateDate" />
 
+            <h2 id="modalTitle" >Nueva Retrospectiva</h2>
+
+            <div>
+              <label for="Title">Título Reunión</label>
+              <input type="text" id="Title" name="Title" required maxlength="60" />
+            </div>
+
+            <div>
+              <label for="StartDate">Fecha de Revision</label>
+              <input type="date" id="StartDate" name="StartDate" required />
+            </div>
+
+            <div>
+              <h3>Logros del Sprint</h3>
+              <div class="logro-impedimento-container">
+                <input type="text" id="nuevoLogro" placeholder="Escribe un logro..." />
+                <button type="button" class="FormButton">Agregar</button>
+              </div>
+              <ul id="listaLogros"></ul>
+              <input type="hidden" name="logrosFinales" id="logrosFinales" />
+            </div>
+
+            <div>
+              <h3>Impedimentos</h3>
+              <div class="logro-impedimento-container">
+                <input type="text" id="nuevoImpedimento" placeholder="Escribe un impedimento..." />
+                <button type="button" class="FormButton">Agregar</button>
+              </div>
+              <ul id="listaImpedimentos"></ul>
+              <input type="hidden" name="impedimentosFinales" id="impedimentosFinales" />
+            </div>
+
+            <div>
+              <h3>Compromisos del equipo</h3>
+              <div class="logro-impedimento-container">
+                <input type="text" id="nuevoCompromiso" placeholder="Escribe un compromiso..." />
+                <button type="button" class="FormButton">Agregar</button>
+              </div>
+              <ul id="listaCompromisos"></ul>
+              <input type="hidden" name="compromisosFinales" id="compromisosFinales" />
+            </div>
+
+            <br />
+            <button type="button" id="btnGuardar">Guardar Retrospectiva</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    
 
     <!-- Tarjetas de retrospectiva -->
     <section class="Tables">
@@ -124,7 +179,7 @@
           </div>
 
           <div class="seccion-retro">
-            <button class="retro-btn" >Retrospectiva</button>
+            <button class="retro-btn" >Retrospectiva anterior</button>
             <button class="retro-btn">Nueva Retrospectiva</button>
           </div>
         </div>
