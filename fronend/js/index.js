@@ -1,4 +1,5 @@
 const table = document.getElementById('registrosTable');
+const tableSprint = document.getElementById('SprinTable');
 
 class Registros {
     static async getAllRegistros() {
@@ -13,61 +14,9 @@ class Registros {
     }
 }
 
-const cargarTabla = async () => {
-    const registros = await Registros.getAllRegistros();
-    const tbody = table.getElementsByTagName('tbody')[0];
-    tbody.innerHTML = '';
-    for (let item of registros) {
-        const tdSprint_Id = document.createElement('td');
-        tdSprint_Id.textContent = item.sprint_id;
-
-        const tdCategoria = document.createElement('td');
-        tdCategoria.textContent = item.categoria;
-
-        const tdDescripcion = document.createElement('td');
-        tdDescripcion.textContent = item.descripcion;
-
-        const tdCumplida = document.createElement('td');
-        tdCumplida.textContent = item.cumplida;
-
-        const tdFecha_revision = document.createElement('td');
-        tdFecha_revision.textContent = item.fecha_revision;
-
-        const tdCreated_at = document.createElement('td');
-        tdCreated_at.textContent = item.created_at;
-
-        const tdUpdated_at = document.createElement('td');
-        tdUpdated_at.textContent = item.updated_at;
-
-        const editarBtn = document.createElement('button');
-        editarBtn.textContent = 'Editar';
-
-        const eliminarBtn = document.createElement('button');
-        eliminarBtn.textContent = 'Eliminar';
-
-        const tdBotones = document.createElement('td');
-        tdBotones.appendChild(editarBtn);
-        tdBotones.appendChild(eliminarBtn);
-
-        const tr = document.createElement('tr');
-        tr.appendChild(tdSprint_Id);
-        tr.appendChild(tdCategoria);
-        tr.appendChild(tdDescripcion);
-        tr.appendChild(tdCumplida);
-        tr.appendChild(tdFecha_revision);
-        tr.appendChild(tdCreated_at);
-        tr.appendChild(tdUpdated_at);
-        tr.appendChild(tdBotones);
-
-        tbody.appendChild(tr);
-    }
-};
-
-cargarTabla();
-
 /////////////////////////////////////////////////////////
 class Sprints {
-    static async getAllRegistros() {
+    static async getAllSprints() {
         try {
             const resp = await fetch('http://127.0.0.1:8000/api/sprints');
             const bodyResp = await resp.json();
@@ -79,99 +28,98 @@ class Sprints {
     }
 }
 const cargarTablasprints = async () => {
-    const sprints = await Sprints.getAllRegistros();
+    const sprints = await Sprints.getAllSprints();
+    const contenedor = document.getElementById('contenedorSprints');
+    contenedor.innerHTML = ''; // Limpiar para evitar duplicados
 
-    if (!sprints || sprints.length === 0) return;
+    for (let item of sprints) {
+        const tarjeta = document.createElement('div');
+        tarjeta.classList.add('tarjeta-retro');
 
-    // Mostrar en los elementos <p> principales
-    const fechaInicioEl = document.getElementById('fechaInicioSprint');
-    const fechaFinEl = document.getElementById('fechaFinSprint');
+        const h3nombre = document.createElement('h3');
+        h3nombre.textContent = `Título: ${item.nombre}`;
 
-    // Asegúrate de que existen en el DOM
-    if (fechaInicioEl && fechaFinEl) {
-        fechaInicioEl.innerHTML = `<strong>Inicio:</strong> ${sprints[0].fecha_inicio}`;
-        fechaFinEl.innerHTML = `<strong>Fin:</strong> ${sprints[0].fecha_fin}`;
+        const fechas = document.createElement('div');
+        fechas.classList.add('seccion-retro', 'fechas-retro');
+
+        const pInicio = document.createElement('p');
+        pInicio.innerHTML = `<strong>Inicio:</strong> ${item.fecha_inicio}`;
+
+        const pFin = document.createElement('p');
+        pFin.innerHTML = `<strong>Fin:</strong> ${item.fecha_fin}`;
+
+        fechas.appendChild(pInicio);
+        fechas.appendChild(pFin);
+
+        // Crear secciones vacías para logros, impedimentos y compromisos
+        const logros = document.createElement('div');
+        logros.classList.add('seccion-retro');
+        logros.innerHTML = `<p><strong>Logros:</strong></p><ul><li>Pendiente...</li></ul>`;
+
+        const impedimentos = document.createElement('div');
+        impedimentos.classList.add('seccion-retro');
+        impedimentos.innerHTML = `<p><strong>Impedimentos:</strong></p><ul><li>Pendiente...</li></ul>`;
+
+        const Comentarios = document.createElement('div');
+        Comentarios.classList.add('seccion-retro');
+        Comentarios.innerHTML = `<p><strong>Comentarios:</strong></p><ul><li>Pendiente...</li></ul>`;
+
+        const acciones = document.createElement('div');
+        acciones.classList.add('seccion-retro');
+        acciones.innerHTML = `<p><strong>Acciones:</strong></p><ul><li>Pendiente...</li></ul>`;
+
+        const botones = document.createElement('div');
+        botones.classList.add('seccion-retro');
+        botones.innerHTML = `
+            <button class="retro-btn">Retrospectiva anterior</button>
+            <button class="retro-btn abrirModalRetro">Nueva Retrospectiva</button>
+        `;
+
+        tarjeta.appendChild(h3nombre);
+        tarjeta.appendChild(fechas);
+        tarjeta.appendChild(logros);
+        tarjeta.appendChild(impedimentos);
+        tarjeta.appendChild(Comentarios);
+        tarjeta.appendChild(acciones);
+        tarjeta.appendChild(botones);
+
+        contenedor.appendChild(tarjeta);
     }
 };
-
 cargarTablasprints();
 
-let logros = [];
-let impedimentos = [];
-let compromisos = [];
-
-document.addEventListener('DOMContentLoaded', function () {
-    const openBtn = document.querySelector('.Create');
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('closeModal');
-    const form = document.getElementById('retroForm');
-
-    const listaLogros = document.getElementById("listaLogros");
-    const listaImpedimentos = document.getElementById("listaImpedimentos");
-    const listaCompromisos = document.getElementById("listaCompromisos");
-    const btnGuardar = document.getElementById("btnGuardar");
-
-    
-//boton de crear un nuevo sprind
-    openBtn.addEventListener('click', () => {
-        abrirModalCreacion();
-    });
-
-    document.querySelectorAll('.retro-btn').forEach((btn) => {
-        if (btn.textContent.trim() === "Nueva Retrospectiva") {
-            btn.addEventListener('click', () => {
-                abrirModalCreacion();
-            });
-        }
-    });
-
-    // Cerrar modal creación
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-
-    
-    // Guardar retrospectiva
-    btnGuardar.addEventListener('click', function () {
-        const titulo = document.getElementById("Title").value.trim();
-        const fechaInicio = document.getElementById("StartDate").value;
-        const fechaFin = document.getElementById("EndDate").value;
-
-    const resumenHTML = `
-        <h2>Retrospectiva guardada</h2>
-        <p><strong>Título:</strong> ${titulo}</p>
-        <p><strong>Fecha Inicio:</strong> ${fechaInicio}</p>
-        <p><strong>Fecha Fin:</strong> ${fechaFin}</p>
-        <div style="margin-top: 20px;">
-            <button id="btnNuevaRetrospectiva" style="margin-right: 10px;">Nueva Retrospectiva</button>
-            <button id="btnVerRetrospectiva">Ver Retrospectiva</button>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', resumenHTML);
-
-
-        document.getElementById('btnVerRetrospectiva').addEventListener('click', () => {
-            alert('Aquí puedes implementar la función para ver retrospectivas guardadas.');
-        });
-
-        form.reset();
-       
-    });
-
-    function abrirModalCreacion() {
-    logros = [];
-    impedimentos = [];
-    compromisos = [];
-
-    const modal = document.getElementById('modal');
-    modal.classList.remove('oculto'); // 👈 Mostrar el modal
-
-    // Mostrar modal
-    document.getElementById('modal').style.display = 'flex';
-
-    // Repintar listas existentes
-}
+document.getElementById('btnAbrirModalSprint').addEventListener('click', () => {
+  document.getElementById('modalSprint').classList.remove('oculto');
 });
 
+document.getElementById('closeModalSprint').addEventListener('click', () => {
+  document.getElementById('modalSprint').classList.add('oculto');
+});
+
+// Guardar Sprint (esto solo imprime en consola, debes enviar al backend)
+document.getElementById('formSprint').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const titulo = document.getElementById('Title').value;
+  const inicio = document.getElementById('StartDate').value;
+  const fin = document.getElementById('EndDate').value;
+
+  const nuevoSprint = {
+    nombre: titulo,
+    fecha_inicio: inicio,
+    fecha_fin: fin
+  };
+
+  // Aquí puedes hacer el POST al backend si ya tienes API
+  console.log("Sprint guardado:", nuevoSprint);
+  document.getElementById('modalSprint').classList.add('oculto');
+});
+
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("abrirModalRetro")) {
+        const modalRetro = document.getElementById("modalRetro");
+        modalRetro.classList.remove("oculto");
+    }
+});
+document.getElementById('closeModalRetro').addEventListener('click', () => {
+  document.getElementById('modalRetro').classList.add('oculto');
+});
