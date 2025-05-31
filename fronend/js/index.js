@@ -39,7 +39,7 @@ class Registros {
             return false;
         }
     }
-    
+
 }
 
 class Sprints {
@@ -56,17 +56,17 @@ class Sprints {
     static async postNewSprint(sprint) {
         try {
             const resp = await fetch('http://127.0.0.1:8000/api/sprint', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nombre: sprint.nombre ,
-                fecha_inicio: sprint.fecha_inicio,
-                fecha_fin: sprint.fecha_fin,
-                created_at: "",
-                updated_at: ""
-            })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nombre: sprint.nombre,
+                    fecha_inicio: sprint.fecha_inicio,
+                    fecha_fin: sprint.fecha_fin,
+                    created_at: "",
+                    updated_at: ""
+                })
             });
             const bodyResp = await resp.json();
             return bodyResp.data == 'Datos guardados';
@@ -129,11 +129,15 @@ const cargarTablasprints = async () => {
         fechas.appendChild(pFin);
 
         const registrosSprint = registros.filter(r => r.sprint_id === item.id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
         const crearSeccion = (titulo, categoria) => {
             const items = registrosSprint.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
-            return `<p><strong>${titulo}:</strong></p>` + 
-                (items.length > 0 
-                    ? `<ul>${items.map(i => `<li>${i.descripcion}</li>`).join('')}</ul>` 
+            return `<p><strong>${titulo}:</strong></p>` +
+                (items.length > 0
+                    ? `<ul>${items.map(i => `<li>${i.descripcion}</li>`).join('')}</ul>`
                     : '<ul><li>Pendiente...</li></ul>');
         };
 
@@ -163,8 +167,7 @@ const cargarTablasprints = async () => {
             <div class="retroAnteriorContainer" data-id="${item.id}"></div>
             <br>
             <br>
-            <button class="retro-btn abrirModalRetro" data-id="${item.id}">Nueva Retrospectiva</button>
-        `;
+            <button class="retro-btn abrirModalRetro" data-id="${item.id}">Nueva Retrospectiva</button>`;
 
         tarjeta.appendChild(h3nombre);
         tarjeta.appendChild(fechas);
@@ -181,27 +184,28 @@ const cargarTablasprints = async () => {
 cargarTablasprints();
 
 document.getElementById('btnAbrirModalSprint').addEventListener('click', () => {
-  document.getElementById('modalSprint').classList.remove('oculto');
+    document.getElementById('modalSprint').classList.remove('oculto');
 });
 
 document.getElementById('closeModalSprint').addEventListener('click', () => {
-  document.getElementById('modalSprint').classList.add('oculto');
+    document.getElementById('modalSprint').classList.add('oculto');
 });
 
 document.getElementById('formSprint').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const titulo = document.getElementById('Title').value;
-  const inicio = document.getElementById('StartDate').value;
-  const fin = document.getElementById('EndDate').value;
+    e.preventDefault();
+    const titulo = document.getElementById('Title').value;
+    const inicio = document.getElementById('StartDate').value;
+    const fin = document.getElementById('EndDate').value;
 
-  const nuevoSprint = {
-    nombre: titulo,
-    fecha_inicio: inicio,
-    fecha_fin: fin
-  };
+    const nuevoSprint = {
+        nombre: titulo,
+        fecha_inicio: inicio,
+        fecha_fin: fin
+    };
 
-  const exito = await Sprints.postNewSprint(nuevoSprint);
+    const exito = await Sprints.postNewSprint(nuevoSprint);
 
+<<<<<<< HEAD
   if (exito) {
     alert("Sprint guardado exitosamente");
     document.getElementById('modalSprint').classList.add('oculto');
@@ -210,6 +214,16 @@ document.getElementById('formSprint').addEventListener('submit', async (e) => {
   } else {
     alert("Hubo un error al guardar el sprint.");
   }
+=======
+    if (exito) {
+        alert("Sprint guardado exitosamente");
+        document.getElementById('modalSprint').classList.add('oculto');
+        document.getElementById('formSprint').reset();
+        cargarTablasprints();
+    } else {
+        alert("Hubo un error al guardar el sprint.");
+    }
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
 });
 
 
@@ -221,11 +235,12 @@ document.addEventListener("click", (e) => {
     }
 });
 document.getElementById('closeModalRetro').addEventListener('click', () => {
-  document.getElementById('modalRetro').classList.add('oculto');
+    document.getElementById('modalRetro').classList.add('oculto');
 });
 
 let sprintSeleccionadoId = null;
 
+<<<<<<< HEAD
 document.addEventListener("click", async (e) => {
     if (e.target.classList.contains("agregarSprint")) {
         document.getElementById("modalSprint").classList.remove("oculto");
@@ -275,6 +290,12 @@ document.addEventListener("click", async (e) => {
                 alert("Error al eliminar el sprint");
             }
         }
+=======
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("abrirModalRetro")) {
+        sprintSeleccionadoId = e.target.getAttribute("data-id");
+        document.getElementById("modalRetro").classList.remove("oculto");
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
     }
 });
 
@@ -332,36 +353,44 @@ document.getElementById("btnGuardarRetro").addEventListener("click", async () =>
     for (let cat of categorias) {
         const lista = document.querySelectorAll(`#lista${capitalize(cat)} li`);
         for (let li of lista) {
-    const descripcion = li.textContent || li.querySelector("span")?.textContent || "";
-    let cumplida = false;
+            const descripcion = li.textContent || li.querySelector("span")?.textContent || "";
+            let cumplida = false;
 
+<<<<<<< HEAD
     if (cat === "accion") {
         const checkbox = li.querySelector("input[type='checkbox']");
         cumplida = checkbox?.checked || false;
     }
+=======
+            // Verificamos si la accion esta marcada 
+            if (cat === "accion") {
+                const checkbox = li.querySelector("input[type='checkbox']");
+                cumplida = checkbox?.checked || false;
+            }
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
 
-    const nuevoRegistro = {
-        sprint_id: parseInt(sprintSeleccionadoId),
-        categoria: cat,
-        descripcion: descripcion,
-        cumplida: cumplida,
-        fecha_revision: fechaRevision
-    };
+            const nuevoRegistro = {
+                sprint_id: parseInt(sprintSeleccionadoId),
+                categoria: cat,
+                descripcion: descripcion,
+                cumplida: cumplida,
+                fecha_revision: fechaRevision
+            };
 
-    const guardado = await Registros.postNewRegistro(nuevoRegistro);
-    if (!guardado) {
-        exito = false;
-    }
-    if (exito) {
-    alert("Retrospectiva guardada correctamente.");
-    document.getElementById("modalRetro").classList.add("oculto");
-    document.getElementById("formRetro").reset();
-    cargarTablasprints(); // refresca las tarjetas
-} else {
-    alert("Hubo un error al guardar algunos datos.");
-}
+            const guardado = await Registros.postNewRegistro(nuevoRegistro);
+            if (!guardado) {
+                exito = false;
+            }
+            if (exito) {
+                alert("Retrospectiva guardada correctamente.");
+                document.getElementById("modalRetro").classList.add("oculto");
+                document.getElementById("formRetro").reset();
+                cargarTablasprints();
+            } else {
+                alert("Hubo un error al guardar algunos datos.");
+            }
 
-}
+        }
 
     }
 
@@ -379,23 +408,21 @@ document.getElementById("btnGuardarRetro").addEventListener("click", async () =>
 const crearSeccion = (titulo, categoria) => {
     const items = registrosSprint.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
 
-    return `<p><strong>${titulo}:</strong></p>` + 
-        (items.length > 0 
-            ? `<ul>${
-                items.map(i => {
-                    if (categoria.toLowerCase() === 'accion') {
-                        return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
-                    } else {
-                        return `<li>${i.descripcion}</li>`;
-                    }
-                }).join('')
-              }</ul>` 
+    return `<p><strong>${titulo}:</strong></p>` +
+        (items.length > 0
+            ? `<ul>${items.map(i => {
+                if (categoria.toLowerCase() === 'accion') {
+                    return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
+                } else {
+                    return `<li>${i.descripcion}</li>`;
+                }
+            }).join('')
+            }</ul>`
             : '<ul><li>Pendiente...</li></ul>');
 };
 
 
 function getListaId(categoria) {
-    // Manejo especial para "acción" -> "Acciones"
     if (categoria.toLowerCase() === 'accion') return 'listaAcciones';
     return `lista${capitalize(categoria)}s`;
 }
@@ -421,17 +448,16 @@ document.addEventListener("click", async (e) => {
         const crearSeccion = (titulo, categoria) => {
             const items = registrosAnteriores.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
 
-            return `<p><strong>${titulo}:</strong></p>` + 
-                (items.length > 0 
-                    ? `<ul>${
-                        items.map(i => {
-                            if (categoria.toLowerCase() === 'accion') {
-                                return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
-                            } else {
-                                return `<li>${i.descripcion}</li>`;
-                            }
-                        }).join('')
-                    }</ul>` 
+            return `<p><strong>${titulo}:</strong></p>` +
+                (items.length > 0
+                    ? `<ul>${items.map(i => {
+                        if (categoria.toLowerCase() === 'accion') {
+                            return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
+                        } else {
+                            return `<li>${i.descripcion}</li>`;
+                        }
+                    }).join('')
+                    }</ul>`
                     : '<ul><li>Pendiente...</li></ul>');
         };
 

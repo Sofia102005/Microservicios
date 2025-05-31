@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/index.css">
   <title>Registro de Reuniones</title>
 </head>
+
 <body>
 
-  <!-- Encabezado -->
   <header>
     <div>
-      <img class="logo" src="recursos/logo.jpg" alt="Logo de RedPulse" >
+      <img class="logo" src="recursos/logo.jpg" alt="Logo de RedPulse">
     </div>
     <nav>
       <h1 class="empresa">RedPulse</h1>
@@ -25,6 +26,7 @@
       <button class="Create" id="btnAbrirModalSprint">Nuevo Sprint</button>
     </section>
 
+<<<<<<< HEAD
   <div id="modalSprint" class="modal-overlay oculto">
     <div class="modal-content">
       <button id="closeModalSprint" class="close-btn" aria-label="Cerrar">&times;</button>
@@ -98,16 +100,97 @@
             <button type="button" id="btnGuardarRetro">Guardar Retrospectiva</button>
           </form>
         </div>
+=======
+    <!--tabla de crear Spring -->
+    <div id="modalSprint" class="modal-overlay oculto">
+      <div class="modal-content">
+        <button id="closeModalSprint" class="close-btn" aria-label="Cerrar">&times;</button>
+        <form id="formSprint">
+          <input type="hidden" name="CreateDate" id="CreateDate">
+          <h2 id="">Nuevo Sprint</h2>
+          <div>
+            <label for="Title">Título Reunión</label>
+            <input type="text" id="Title" name="Title" required maxlength="60">
+          </div>
+          <div>
+            <label for="StartDate">Fecha de Inicio</label>
+            <input type="date" id="StartDate" name="StartDate" required>
+          </div>
+          <div>
+            <label for="EndDate">Fecha de Fin</label>
+            <input type="date" id="EndDate" name="EndDate" required>
+          </div>
+          <br />
+          <button type="submit" id="btnGuardarSprint">Guardar Sprint</button>
+        </form>
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
       </div>
+    </div>
+    <!-- guardar los datos -->
+    <div id="modalRetro" class="modal-overlay oculto">
+      <div class="modal-content">
+        <button id="closeModalRetro" class="close-btn" aria-label="Cerrar">&times;</button>
+        <form id="formRetro" method="post" action="">
+          <h2 id="modalTitle">Nueva Retrospectiva</h2>
+          <div>
+            <label for="fechaRevision">Fecha de Revision</label>
+            <input type="date" id="fechaRevision" name="fechaRevision" required>
+          </div>
+
+          <div>
+            <h3>Logros</h3>
+            <div class="logro-impedimento-container">
+              <input type="text" id="inputLogro" placeholder="Escribe un Logro...">
+              <button type="button" class="FormButton" onclick="agregarItem('logro')">Agregar</button>
+            </div>
+            <ul id="listaLogros"></ul>
+          </div>
+
+          <div>
+            <h3>Impedimentos</h3>
+            <div class="logro-impedimento-container">
+              <input type="text" id="inputImpedimento" placeholder="Escribe un Impedimento...">
+              <button type="button" class="FormButton" onclick="agregarItem('impedimento')">Agregar</button>
+            </div>
+            <ul id="listaImpedimentos"></ul>
+          </div>
+
+          <div>
+            <h3>Comentarios</h3>
+            <div class="logro-impedimento-container">
+              <input type="text" id="inputComentario" placeholder="Escribe un Comentario...">
+              <button type="button" class="FormButton" onclick="agregarItem('comentario')">Agregar</button>
+            </div>
+            <ul id="listaComentarios"></ul>
+          </div>
+
+          <div>
+            <h3>Acciones</h3>
+            <div class="logro-impedimento-container">
+              <input type="text" id="inputAccion" placeholder="Escribe una Accion...">
+              <button type="button" class="FormButton" onclick="agregarItem('accion')">Agregar</button>
+            </div>
+            <ul id="listaAcciones"></ul>
+          </div>
+          <br />
+          <button type="button" id="btnGuardarRetro">Guardar Retrospectiva</button>
+        </form>
+      </div>
+    </div>
 
     <br>
+<<<<<<< HEAD
   
+=======
+    <!-- Tarjetas de retrospectiva -->
+>>>>>>> 79550f2ba6524512c50ff9a29e87d284951ebce0
     <section class="Tables">
-        <div class="tarjeta-retro" id="contenedorSprints">
-        </div>
+      <div class="tarjeta-retro" id="contenedorSprints">
+      </div>
     </section>
   </main>
 
   <script src="js/index.js"></script>
 </body>
+
 </html>

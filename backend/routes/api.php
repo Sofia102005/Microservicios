@@ -20,3 +20,4 @@ Route::controller(SprintsController::class)->group(function(){
     Route::put('sprint/{id}', 'update');
     Route::delete('sprint/{id}', 'destroy');
 });
+//CRUD
