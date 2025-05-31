@@ -55,55 +55,50 @@
       <div id="modalRetro" class="modal-overlay oculto">
         <div class="modal-content">
           <button id="closeModalRetro" class="close-btn" aria-label="Cerrar">&times;</button>
-          <form id="" method="post" action="">
-            <input type="hidden" name="CreateDate" id="">
+          <form id="formRetro" method="post" action="">
             <h2 id="modalTitle" >Nueva Retrospectiva</h2>
             <div>
-              <label for="StartDate">Fecha de Revision</label>
-              <input type="date" id="" name="" required>
+              <label for="fechaRevision">Fecha de Revision</label>
+              <input type="date" id="fechaRevision" name="fechaRevision" required>
             </div>
 
             <div>
               <h3>Logros</h3>
               <div class="logro-impedimento-container">
-                <input type="text" id="" placeholder="Escribe un Logro...">
-                <button type="button" class="FormButton">Agregar</button>
+                <input type="text" id="inputLogro" placeholder="Escribe un Logro...">
+                <button type="button" class="FormButton" onclick="agregarItem('logro')">Agregar</button>
               </div>
-              <ul id=""></ul>
-              <input type="hidden" name="" id="">
+              <ul id="listaLogros"></ul>
             </div>
 
             <div>
               <h3>Impedimentos</h3>
               <div class="logro-impedimento-container">
-                <input type="text" id="" placeholder="Escribe un Impedimento...">
-                <button type="button" class="FormButton">Agregar</button>
+                <input type="text" id="inputImpedimento" placeholder="Escribe un Impedimento...">
+                <button type="button" class="FormButton" onclick="agregarItem('impedimento')">Agregar</button>
               </div>
-              <ul id=""></ul>
-              <input type="hidden" name="" id="">
+              <ul id="listaImpedimentos"></ul>
             </div>
 
             <div>
-              <h3>Comentario</h3>
+              <h3>Comentarios</h3>
               <div class="logro-impedimento-container">
-                <input type="text" id="" placeholder="Escribe un Comentario...">
-                <button type="button" class="FormButton">Agregar</button>
+                <input type="text" id="inputComentario" placeholder="Escribe un Comentario...">
+                <button type="button" class="FormButton" onclick="agregarItem('comentario')">Agregar</button>
               </div>
-              <ul id=""></ul>
-              <input type="hidden" name="" id="">
+              <ul id="listaComentarios"></ul>
             </div>
 
             <div>
               <h3>Acciones</h3>
               <div class="logro-impedimento-container">
-                <input type="text" id="" placeholder="Escribe una Accion...">
-                <button type="button" class="FormButton">Agregar</button>
+                <input type="text" id="inputAccion" placeholder="Escribe una Accion...">
+                <button type="button" class="FormButton" onclick="agregarItem('accion')">Agregar</button>
               </div>
-              <ul id=""></ul>
-              <input type="hidden" name="" id="">
+              <ul id="listaAcciones"></ul>
             </div>
             <br />
-            <button type="button" id="">Guardar Retrospectiva</button>
+            <button type="button" id="btnGuardarRetro">Guardar Retrospectiva</button>
           </form>
         </div>
       </div>

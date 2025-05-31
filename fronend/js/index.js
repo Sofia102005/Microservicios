@@ -1,5 +1,8 @@
 const table = document.getElementById('registrosTable');
 const tableSprint = document.getElementById('SprinTable');
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 class Registros {
     static async getAllRegistros() {
@@ -12,9 +15,33 @@ class Registros {
             return null;
         }
     }
+    static async postNewRegistro(registro) {
+        try {
+            const resp = await fetch('http://127.0.0.1:8000/api/registro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sprint_id: registro.sprint_id,
+                    categoria: registro.categoria,
+                    descripcion: registro.descripcion,
+                    cumplida: registro.cumplida,
+                    fecha_revision: registro.fecha_revision,
+                    created_at: "",
+                    updated_at: ""
+                })
+            });
+            const bodyResp = await resp.json();
+            return bodyResp.data == 'Datos guardados';
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+    
 }
 
-/////////////////////////////////////////////////////////
 class Sprints {
     static async getAllSprints() {
         try {
@@ -26,11 +53,34 @@ class Sprints {
             return null;
         }
     }
+    static async postNewSprint(sprint) {
+        try {
+            const resp = await fetch('http://127.0.0.1:8000/api/sprint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: sprint.nombre ,
+                fecha_inicio: sprint.fecha_inicio,
+                fecha_fin: sprint.fecha_fin,
+                created_at: "",
+                updated_at: ""
+            })
+            });
+            const bodyResp = await resp.json();
+            return bodyResp.data == 'Datos guardados';
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
 }
 const cargarTablasprints = async () => {
     const sprints = await Sprints.getAllSprints();
+    const registros = await Registros.getAllRegistros();
     const contenedor = document.getElementById('contenedorSprints');
-    contenedor.innerHTML = ''; // Limpiar para evitar duplicados
+    contenedor.innerHTML = '';
 
     for (let item of sprints) {
         const tarjeta = document.createElement('div');
@@ -51,41 +101,56 @@ const cargarTablasprints = async () => {
         fechas.appendChild(pInicio);
         fechas.appendChild(pFin);
 
-        // Crear secciones vacías para logros, impedimentos y compromisos
+        // Filtramos los registros que pertenecen al sprint actual
+        const registrosSprint = registros.filter(r => r.sprint_id === item.id);
+
+        // Creamos las secciones con los datos o 'Pendiente...' si no hay
+        const crearSeccion = (titulo, categoria) => {
+            const items = registrosSprint.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
+            return `<p><strong>${titulo}:</strong></p>` + 
+                (items.length > 0 
+                    ? `<ul>${items.map(i => `<li>${i.descripcion}</li>`).join('')}</ul>` 
+                    : '<ul><li>Pendiente...</li></ul>');
+        };
+
         const logros = document.createElement('div');
         logros.classList.add('seccion-retro');
-        logros.innerHTML = `<p><strong>Logros:</strong></p><ul><li>Pendiente...</li></ul>`;
+        logros.innerHTML = crearSeccion('Logros', 'logro');
 
         const impedimentos = document.createElement('div');
         impedimentos.classList.add('seccion-retro');
-        impedimentos.innerHTML = `<p><strong>Impedimentos:</strong></p><ul><li>Pendiente...</li></ul>`;
+        impedimentos.innerHTML = crearSeccion('Impedimentos', 'impedimento');
 
-        const Comentarios = document.createElement('div');
-        Comentarios.classList.add('seccion-retro');
-        Comentarios.innerHTML = `<p><strong>Comentarios:</strong></p><ul><li>Pendiente...</li></ul>`;
+        const comentarios = document.createElement('div');
+        comentarios.classList.add('seccion-retro');
+        comentarios.innerHTML = crearSeccion('Comentarios', 'comentario');
 
         const acciones = document.createElement('div');
         acciones.classList.add('seccion-retro');
-        acciones.innerHTML = `<p><strong>Acciones:</strong></p><ul><li>Pendiente...</li></ul>`;
+        acciones.innerHTML = crearSeccion('Acciones', 'accion');
 
         const botones = document.createElement('div');
         botones.classList.add('seccion-retro');
         botones.innerHTML = `
-            <button class="retro-btn">Retrospectiva anterior</button>
-            <button class="retro-btn abrirModalRetro">Nueva Retrospectiva</button>
+            <button class="retro-btn btnRetroAnterior" data-id="${item.id}">Retrospectiva anterior</button>
+            <div class="retroAnteriorContainer" data-id="${item.id}"></div>
+            <br>
+            <br>
+            <button class="retro-btn abrirModalRetro" data-id="${item.id}">Nueva Retrospectiva</button>
         `;
 
         tarjeta.appendChild(h3nombre);
         tarjeta.appendChild(fechas);
         tarjeta.appendChild(logros);
         tarjeta.appendChild(impedimentos);
-        tarjeta.appendChild(Comentarios);
+        tarjeta.appendChild(comentarios);
         tarjeta.appendChild(acciones);
         tarjeta.appendChild(botones);
 
         contenedor.appendChild(tarjeta);
     }
 };
+
 cargarTablasprints();
 
 document.getElementById('btnAbrirModalSprint').addEventListener('click', () => {
@@ -96,7 +161,6 @@ document.getElementById('closeModalSprint').addEventListener('click', () => {
   document.getElementById('modalSprint').classList.add('oculto');
 });
 
-// Guardar Sprint (esto solo imprime en consola, debes enviar al backend)
 document.getElementById('formSprint').addEventListener('submit', async (e) => {
   e.preventDefault();
   const titulo = document.getElementById('Title').value;
@@ -109,10 +173,19 @@ document.getElementById('formSprint').addEventListener('submit', async (e) => {
     fecha_fin: fin
   };
 
-  // Aquí puedes hacer el POST al backend si ya tienes API
-  console.log("Sprint guardado:", nuevoSprint);
-  document.getElementById('modalSprint').classList.add('oculto');
+  const exito = await Sprints.postNewSprint(nuevoSprint);
+
+  if (exito) {
+    alert("Sprint guardado exitosamente");
+    document.getElementById('modalSprint').classList.add('oculto');
+    document.getElementById('formSprint').reset();
+    cargarTablasprints(); // vuelve a cargar la lista con el nuevo sprint
+  } else {
+    alert("Hubo un error al guardar el sprint.");
+  }
 });
+
+
 
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("abrirModalRetro")) {
@@ -123,3 +196,184 @@ document.addEventListener("click", (e) => {
 document.getElementById('closeModalRetro').addEventListener('click', () => {
   document.getElementById('modalRetro').classList.add('oculto');
 });
+
+let sprintSeleccionadoId = null;
+
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("abrirModalRetro")) {
+        sprintSeleccionadoId = e.target.getAttribute("data-id"); // Guardamos el ID del sprint
+        document.getElementById("modalRetro").classList.remove("oculto");
+    }
+});
+
+
+function agregarItem(categoria) {
+    const input = document.getElementById(`input${capitalize(categoria)}`);
+    const listaId = getListaId(categoria);
+    const lista = document.getElementById(listaId);
+    const texto = input.value.trim();
+
+    if (!lista) {
+        console.error(`No se encontró el elemento con ID ${listaId}`);
+        return;
+    }
+
+    if (texto) {
+        const li = document.createElement("li");
+
+        if (categoria === "accion") {
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.classList.add("checkboxCumplida");
+
+            const span = document.createElement("span");
+            span.textContent = texto;
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+        } else {
+            li.textContent = texto;
+        }
+
+        lista.appendChild(li);
+        input.value = "";
+    }
+}
+
+
+document.getElementById("btnGuardarRetro").addEventListener("click", async () => {
+    const fechaRevision = document.getElementById("fechaRevision").value;
+
+    if (!fechaRevision) {
+        alert("Debes seleccionar una fecha de revisión.");
+        return;
+    }
+
+    if (!sprintSeleccionadoId) {
+        alert("No se ha seleccionado un sprint.");
+        return;
+    }
+
+    const categorias = ["logro", "impedimento", "comentario", "accion"];
+    let exito = true;
+
+    for (let cat of categorias) {
+        const lista = document.querySelectorAll(`#lista${capitalize(cat)} li`);
+        for (let li of lista) {
+    const descripcion = li.textContent || li.querySelector("span")?.textContent || "";
+    let cumplida = false;
+
+    // Si es una acción, verificamos si está marcada
+    if (cat === "accion") {
+        const checkbox = li.querySelector("input[type='checkbox']");
+        cumplida = checkbox?.checked || false;
+    }
+
+    const nuevoRegistro = {
+        sprint_id: parseInt(sprintSeleccionadoId),
+        categoria: cat,
+        descripcion: descripcion,
+        cumplida: cumplida,
+        fecha_revision: fechaRevision
+    };
+
+    const guardado = await Registros.postNewRegistro(nuevoRegistro);
+    if (!guardado) {
+        exito = false;
+    }
+    if (exito) {
+    alert("Retrospectiva guardada correctamente.");
+    document.getElementById("modalRetro").classList.add("oculto");
+    document.getElementById("formRetro").reset();
+    cargarTablasprints(); // refresca las tarjetas
+} else {
+    alert("Hubo un error al guardar algunos datos.");
+}
+
+}
+
+    }
+
+    if (exito) {
+        alert("Retrospectiva guardada exitosamente.");
+        document.getElementById("modalRetro").classList.add("oculto");
+        cargarTablasprints();
+    } else {
+        alert("Hubo errores al guardar algunos registros. Revisa la consola.");
+    }
+});
+
+
+
+const crearSeccion = (titulo, categoria) => {
+    const items = registrosSprint.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
+
+    return `<p><strong>${titulo}:</strong></p>` + 
+        (items.length > 0 
+            ? `<ul>${
+                items.map(i => {
+                    if (categoria.toLowerCase() === 'accion') {
+                        return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
+                    } else {
+                        return `<li>${i.descripcion}</li>`;
+                    }
+                }).join('')
+              }</ul>` 
+            : '<ul><li>Pendiente...</li></ul>');
+};
+
+
+function getListaId(categoria) {
+    // Manejo especial para "acción" -> "Acciones"
+    if (categoria.toLowerCase() === 'accion') return 'listaAcciones';
+    return `lista${capitalize(categoria)}s`;
+}
+
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("btnRetroAnterior")) {
+        const sprintActualId = parseInt(e.target.getAttribute("data-id"));
+        const contenedor = e.target.nextElementSibling;
+
+        const sprints = await Sprints.getAllSprints();
+        const registros = await Registros.getAllRegistros();
+
+        const indexActual = sprints.findIndex(s => s.id === sprintActualId);
+        const sprintAnterior = sprints[indexActual - 1];
+
+        if (!sprintAnterior) {
+            contenedor.innerHTML = "<p>No hay sprint anterior.</p>";
+            return;
+        }
+
+        const registrosAnteriores = registros.filter(r => r.sprint_id === sprintAnterior.id);
+
+        const crearSeccion = (titulo, categoria) => {
+            const items = registrosAnteriores.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
+
+            return `<p><strong>${titulo}:</strong></p>` + 
+                (items.length > 0 
+                    ? `<ul>${
+                        items.map(i => {
+                            if (categoria.toLowerCase() === 'accion') {
+                                return `<li>${i.descripcion} ${i.cumplida ? '(✔️ Cumplida)' : '(❌ No cumplida)'}</li>`;
+                            } else {
+                                return `<li>${i.descripcion}</li>`;
+                            }
+                        }).join('')
+                    }</ul>` 
+                    : '<ul><li>Pendiente...</li></ul>');
+        };
+
+        contenedor.innerHTML = `
+            <div class="seccion-retro">
+                <h4>Retrospectiva del sprint anterior: ${sprintAnterior.nombre}</h4>
+                ${crearSeccion('Logros', 'logro')}
+                ${crearSeccion('Impedimentos', 'impedimento')}
+                ${crearSeccion('Comentarios', 'comentario')}
+                ${crearSeccion('Acciones', 'accion')}
+            </div>
+        `;
+    }
+});
+
+
