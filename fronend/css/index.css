@@ -36,7 +36,7 @@ header {
 }
 
 .tarjeta-retro {
-    flex: 0 0 300px; /* Ancho fijo de tarjeta */
+    flex: 0 0 300px;
     border: 1px solid #ccc;
     padding: 15px;
     width: 300px;
@@ -244,7 +244,6 @@ header {
     }
 }
 
-/* ESTILOS PARA EL MODAL DE RESUMEN */
 #contenidoResumen {
     font-family: 'Segoe UI', sans-serif;
     line-height: 1.6;

@@ -75,6 +75,33 @@ class Sprints {
             return false;
         }
     }
+    static async updateSprint(id, sprint) {
+    try {
+        const resp = await fetch(`http://127.0.0.1:8000/api/sprint/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sprint)
+        });
+        const bodyResp = await resp.json();
+        return bodyResp.data == 'Datos actualizados';
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    static async deleteSprint(id) {
+        try {
+            const resp = await fetch(`http://127.0.0.1:8000/api/sprint/${id}`, {
+                method: 'DELETE'
+            });
+            const bodyResp = await resp.json();
+            return bodyResp.data == 'Sprint eliminado';
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
 }
 const cargarTablasprints = async () => {
     const sprints = await Sprints.getAllSprints();
@@ -101,10 +128,7 @@ const cargarTablasprints = async () => {
         fechas.appendChild(pInicio);
         fechas.appendChild(pFin);
 
-        // Filtramos los registros que pertenecen al sprint actual
         const registrosSprint = registros.filter(r => r.sprint_id === item.id);
-
-        // Creamos las secciones con los datos o 'Pendiente...' si no hay
         const crearSeccion = (titulo, categoria) => {
             const items = registrosSprint.filter(r => r.categoria.toLowerCase() === categoria.toLowerCase());
             return `<p><strong>${titulo}:</strong></p>` + 
@@ -132,6 +156,9 @@ const cargarTablasprints = async () => {
         const botones = document.createElement('div');
         botones.classList.add('seccion-retro');
         botones.innerHTML = `
+        <button class="retro-btn btnEditarSprint" data-id="${item.id}" data-nombre="${item.nombre}" data-inicio="${item.fecha_inicio}" data-fin="${item.fecha_fin}">Editar Sprint</button>
+        <button class="retro-btn btnEliminarSprint" data-id="${item.id}">Eliminar Sprint</button>
+
             <button class="retro-btn btnRetroAnterior" data-id="${item.id}">Retrospectiva anterior</button>
             <div class="retroAnteriorContainer" data-id="${item.id}"></div>
             <br>
@@ -179,7 +206,7 @@ document.getElementById('formSprint').addEventListener('submit', async (e) => {
     alert("Sprint guardado exitosamente");
     document.getElementById('modalSprint').classList.add('oculto');
     document.getElementById('formSprint').reset();
-    cargarTablasprints(); // vuelve a cargar la lista con el nuevo sprint
+    cargarTablasprints();
   } else {
     alert("Hubo un error al guardar el sprint.");
   }
@@ -199,10 +226,55 @@ document.getElementById('closeModalRetro').addEventListener('click', () => {
 
 let sprintSeleccionadoId = null;
 
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("abrirModalRetro")) {
-        sprintSeleccionadoId = e.target.getAttribute("data-id"); // Guardamos el ID del sprint
-        document.getElementById("modalRetro").classList.remove("oculto");
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("agregarSprint")) {
+        document.getElementById("modalSprint").classList.remove("oculto");
+    }
+
+    if (e.target.classList.contains("btnEditarSprint")) {
+        const id = e.target.getAttribute("data-id");
+        const nombre = e.target.getAttribute("data-nombre");
+        const inicio = e.target.getAttribute("data-inicio");
+        const fin = e.target.getAttribute("data-fin");
+
+        document.getElementById("Title").value = nombre;
+        document.getElementById("StartDate").value = inicio;
+        document.getElementById("EndDate").value = fin;
+
+        document.getElementById("modalSprint").classList.remove("oculto");
+
+        const form = document.getElementById("formSprint");
+        form.onsubmit = async (ev) => {
+            ev.preventDefault();
+            const updatedSprint = {
+                nombre: document.getElementById("Title").value,
+                fecha_inicio: document.getElementById("StartDate").value,
+                fecha_fin: document.getElementById("EndDate").value
+            };
+            const actualizado = await Sprints.updateSprint(id, updatedSprint);
+            if (actualizado) {
+                alert("Sprint actualizado");
+                document.getElementById("modalSprint").classList.add("oculto");
+                form.reset();
+                cargarTablasprints();
+            } else {
+                alert("Error al actualizar");
+            }
+            form.onsubmit = null;
+        };
+    }
+
+    if (e.target.classList.contains("btnEliminarSprint")) {
+        const id = e.target.getAttribute("data-id");
+        if (confirm("¿Estás seguro de eliminar este sprint? Esta acción no se puede deshacer.")) {
+            const eliminado = await Sprints.deleteSprint(id);
+            if (eliminado) {
+                alert("Sprint eliminado");
+                cargarTablasprints();
+            } else {
+                alert("Error al eliminar el sprint");
+            }
+        }
     }
 });
 
@@ -263,7 +335,6 @@ document.getElementById("btnGuardarRetro").addEventListener("click", async () =>
     const descripcion = li.textContent || li.querySelector("span")?.textContent || "";
     let cumplida = false;
 
-    // Si es una acción, verificamos si está marcada
     if (cat === "accion") {
         const checkbox = li.querySelector("input[type='checkbox']");
         cumplida = checkbox?.checked || false;
